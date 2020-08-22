@@ -16,3 +16,16 @@
      width: 25%;
      height: auto;
  }
+
+div {
+    padding-top: 20px;
+    text-align: center;
+    }
+
+p {
+    font-size: 15px;
+}
+
+.paragrath {
+    font-size: 25px;
+}
