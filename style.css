@@ -488,6 +488,7 @@ h1 {
 }
 .spell_char:hover {
     background-color: teal;
+    cursor: pointer;
 }
 
 .spell_enemy {
@@ -504,4 +505,5 @@ h1 {
 }
 .spell_enemy:hover {
     background-color: teal;
+    cursor: pointer;
 }
