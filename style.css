@@ -507,3 +507,13 @@ h1 {
     background-color: teal;
     cursor: pointer;
 }
+
+#logs {
+    position: absolute;
+    top: 70%;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 5px;
+    background-color: white;
+    border: solid 1px black;
+}

@@ -1,66 +1,81 @@
 const btnFight= document.querySelector('#btn-kick'), 
       btnParent = document.querySelector('.control'),
       spell_char = document.querySelector('.spell_char'),
-      spell_enemy = document.querySelector('.spell_enemy');
+      spell_enemy = document.querySelector('.spell_enemy'),
+      fightLog = document.querySelector('#logs'),
+      paragrathLog = document.createElement('p');
 
 
-// spell_char.addEventListener('click', () => {
-//     console.log('Lighting Bolt');
-//     kickAss(randomizeDmg(20), enemy, character);
-// });
-// spell_enemy.addEventListener('click', ()=> {
-//     console.log('Fire Ball');
-//     kickAss(randomizeDmg(20), character, enemy);
-// });
 const character = {
     name: 'Pikachu',
-    defaultHP: 100,
-    demageHP: 100,
-    showHP: showHP,
-    kickAss: kickAss,
+    type: 'electric',
+    weakness: ['fighting', 'water', 'some'],
+    resistance: ['steel'],
+    hp: {
+        current: 100,
+        total: 100
+        },
     elementHP: document.querySelector('#health-character'),
-    healthBlock: document.querySelector('#progressbar-character')
+    healthBlock: document.querySelector('#progressbar-character'),
+    showHP: showHP,
+    renderHP: renderHP,
+    kickAss: kickAss
 };
+
 const enemy = {
     name: 'Charmander',
-    defaultHP: 100,
-    demageHP: 100,
-    showHP: showHP,
-    kickAss: kickAss,
+    type: 'electric',
+    weakness: ['fighting', 'water', 'some'],
+    resistance: ['steel'],
+    hp: {
+        current: 100,
+        total: 100
+        },
     elementHP: document.querySelector('#health-enemy'),
-    healthBlock: document.querySelector('#progressbar-enemy')
+    healthBlock: document.querySelector('#progressbar-enemy'),
+    showHP: showHP,
+    renderHP: renderHP,
+    kickAss: kickAss
 };
+
+function generateLog(firstPerson, secondPerson, dmg) {
+    const logs = [
+        `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, ударил в предплечье врага.на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} приложил прямой удар коленом в пах на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} забылся, но в это время ${secondPerson.name},неслышно подойдя сзади, ударил на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} нанес мощнейший удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} раздробил кулаком \<вырезанно цензурой\> противника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} пошатнулся, и  ${secondPerson.name} беспричинно ударил в ногу противника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} влепил  в живот соперника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
+        `${firstPerson.name} пытался что-то сказать, но ${secondPerson.name} разбил бровь сопернику на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`
+    ];
+    return logs[randomizeDmg(logs.length)-1];
+}
 btnFight.addEventListener('click', ()=>{
-    character.kickAss(enemy, randomizeDmg(20));
-    enemy.kickAss(character, randomizeDmg(20));
+    character.kickAss(randomizeDmg(20));
+    enemy.kickAss(randomizeDmg(20));
 });
-
 function renderHP () {
-    character.showHP();
-    enemy.showHP();
-
+    this.showHP();
 }
 function showHP(){
-    this.elementHP.innerText = `${this.demageHP} / ${this.defaultHP}`;
-    console.log(`${this.name}: ${this.elementHP.innerText}`);
-    this.healthBlock.style.width = this.demageHP+'%';
+    this.elementHP.innerText = `${this.hp.current} / ${this.hp.total}`;
+    this.healthBlock.style.width = this.hp.current+'%';
 }
-
-function kickAss (target, dmg){
-    if (target.demageHP < dmg) {
-        target.demageHP = 0;
-         alert(`${target.name} Проиграл`);
-         btnFight.disabled = true;
-    } else {
-        target.demageHP -= dmg;
-    }
-    let fightLog = document.createElement('div');
-    fightLog.innerText = `${this.name} наносит ${dmg} урона`;    
-    btnParent.append(fightLog);
-    console.log(`${this.name} наносит ${dmg} урона`);
-    renderHP();
-    }
-
+function kickAss (dmg){
+    this.hp.current -= dmg;
+    const log = this === enemy ? generateLog(this, character, dmg) : generateLog (this, enemy, dmg);
+    if (this.hp.current <=0) {
+        this.hp.current = 0;
+        alert(`${this.name} Проиграл`);
+        btnFight.disabled = true;
+    }    
+    paragrathLog.innerText = log;
+    fightLog.insertBefore(paragrathLog, fightLog.children[0]);
+    this.renderHP();
+}
 function randomizeDmg (num) {
     return Math.floor(Math.random()*num);
 }
