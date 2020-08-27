@@ -61,15 +61,17 @@ function renderHP () {
     this.showHP();
 }
 function showHP(){
-    this.elementHP.innerText = `${this.hp.current} / ${this.hp.total}`;
-    this.healthBlock.style.width = this.hp.current+'%';
+    const {elementHP, healthBlock, hp: {current, total}} = this;
+    elementHP.innerText = `${current} / ${total}`;
+    healthBlock.style.width = current+'%';
 }
 function kickAss (dmg){
     this.hp.current -= dmg;
+    const {name} = this;
     const log = this === enemy ? generateLog(this, character, dmg) : generateLog (this, enemy, dmg);
     if (this.hp.current <=0) {
         this.hp.current = 0;
-        alert(`${this.name} Проиграл`);
+        alert(`${name} Проиграл`);
         btnFight.disabled = true;
     }    
     paragrathLog.innerText = log;
