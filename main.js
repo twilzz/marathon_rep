@@ -1,7 +1,5 @@
 const btnFight= document.querySelector('#btn-kick'), 
       btnParent = document.querySelector('.control'),
-      spell_char = document.querySelector('.spell_char'),
-      spell_enemy = document.querySelector('.spell_enemy'),
       fightLog = document.querySelector('#logs'),
       paragrathLog = document.createElement('p');
 
@@ -66,11 +64,11 @@ function showHP(){
     healthBlock.style.width = current+'%';
 }
 function kickAss (dmg){
+    let {name, hp:{current}} = this;
     this.hp.current -= dmg;
-    const {name} = this;
     const log = this === enemy ? generateLog(this, character, dmg) : generateLog (this, enemy, dmg);
-    if (this.hp.current <=0) {
-        this.hp.current = 0;
+    if (current <=0) {
+        current = 0;
         alert(`${name} Проиграл`);
         btnFight.disabled = true;
     }    
