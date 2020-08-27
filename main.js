@@ -22,7 +22,7 @@ const character = {
 
 const enemy = {
     name: 'Charmander',
-    type: 'electric',
+    type: 'fire',
     weakness: ['fighting', 'water', 'some'],
     resistance: ['steel'],
     hp: {
@@ -37,17 +37,18 @@ const enemy = {
 };
 
 function generateLog(firstPerson, secondPerson, dmg) {
+    console.log(firstPerson, secondPerson, dmg);
     const logs = [
-        `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, ударил в предплечье врага.на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} приложил прямой удар коленом в пах на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} забылся, но в это время ${secondPerson.name},неслышно подойдя сзади, ударил на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} нанес мощнейший удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} раздробил кулаком \<вырезанно цензурой\> противника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} пошатнулся, и  ${secondPerson.name} беспричинно ударил в ногу противника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} влепил  в живот соперника на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`,
-        `${firstPerson.name} пытался что-то сказать, но ${secondPerson.name} разбил бровь сопернику на ${dmg} урона, оставив [${firstPerson.hp.current}|${firstPerson.hp.total}]`
+        `${firstPerson.name} вспомнил что-то важное, но неожиданно ${secondPerson.name}, ударил в предплечье врага.на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} поперхнулся, и за это ${secondPerson.name} приложил прямой удар коленом в пах на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} забылся, но в это время ${secondPerson.name},неслышно подойдя сзади, ударил на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} пришел в себя, но неожиданно ${secondPerson.name} нанес мощнейший удар на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} поперхнулся, но в это время ${secondPerson.name} раздробил кулаком \<вырезанно цензурой\> противника на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} удивился, а ${secondPerson.name} пошатнувшись влепил подлый удар на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} высморкался, но неожиданно ${secondPerson.name} провел дробящий удар на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} пошатнулся, и  ${secondPerson.name} беспричинно ударил в ногу противника на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} расстроился, как вдруг, неожиданно ${secondPerson.name} влепил  в живот соперника на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
+        `${firstPerson.name} пытался что-то сказать, но ${secondPerson.name} разбил бровь сопернику на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`
     ];
     return logs[randomizeDmg(logs.length)-1];
 }
@@ -64,16 +65,17 @@ function showHP(){
     healthBlock.style.width = current+'%';
 }
 function kickAss (dmg){
-    let {name, hp:{current}} = this;
+    let { name, hp:{current} } = this;
     this.hp.current -= dmg;
-    const log = this === enemy ? generateLog(this, character, dmg) : generateLog (this, enemy, dmg);
+    let log = this === character ? generateLog(enemy, this, dmg) : generateLog(character, this, dmg);
     if (current <=0) {
         current = 0;
         alert(`${name} Проиграл`);
         btnFight.disabled = true;
-    }    
+    }
+    console.log(log);
     paragrathLog.innerText = log;
-    fightLog.insertBefore(paragrathLog, fightLog.children[0]);
+    fightLog.append(paragrathLog);
     this.renderHP();
 }
 function randomizeDmg (num) {
