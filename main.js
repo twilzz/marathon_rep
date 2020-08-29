@@ -1,8 +1,42 @@
 const btnFight= document.querySelector('#btn-kick'), 
       btnParent = document.querySelector('.control'),
       fightLog = document.querySelector('#logs'),
-      paragrathLog = document.createElement('p');
+      paragrathLog = document.createElement('p'),
+      spellChar = document.querySelector('.spell_char'),
+      spellEnemy = document.querySelector('.spell_enemy');
+      
 
+console.log(spellChar,spellEnemy);
+
+spellChar.addEventListener('click', () => {
+    let b = result();
+    if (b === 0) {
+        spellChar.disabled = true;
+        spellChar.innerText = 0;
+        alert ("the end");
+    } else {
+        spellChar.innerText = b;
+           }
+});
+
+spellEnemy.addEventListener('click', () => {
+    let b = clickCounter(6);
+    if (b() === 0) {
+        spellEnemy.disabled = true;
+        spellEnemy.innerText = 0;
+        } else {
+        spellEnemy.innerText = b();
+           }
+});
+let result = clickCounter(6);
+function clickCounter (b) {
+    let local = b;
+    return ()=>  {
+        if (local === 0) {
+        return local;
+    } else {
+        return local--;}
+}}
 
 const character = {
     name: 'Pikachu',
@@ -53,6 +87,7 @@ function generateLog(firstPerson, secondPerson, dmg) {
     return logs[randomizeDmg(logs.length)-1];
 }
 btnFight.addEventListener('click', ()=>{
+    btnFight.innerText = result();
     character.kickAss(randomizeDmg(20));
     enemy.kickAss(randomizeDmg(20));
 });
@@ -81,3 +116,4 @@ function kickAss (dmg){
 function randomizeDmg (num) {
     return Math.floor(Math.random()*num);
 }
+
