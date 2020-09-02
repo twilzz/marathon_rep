@@ -45,26 +45,19 @@ player2.attacks.forEach(item => {
 
 });
 
-
-
-
-
-
-
-
-let countChar = clickCounter(6);
+let count = clickCounter(6);
 let countEnem = clickCounter(6);
 
 
 
-function clickCounter (b) {
-    let local = b;
+function clickCounter (count, btn) {
+    const innerText = btn.innerText;
+    btn.innerText = `${innerText}(${count})`;
     return ()=>  {
-        if (local === 0) {
-        return local;
-    } else {
-        return --local;}
-}}
+        count--;
+        return count;
+    };
+}
 
 
 function generateLog(firstPerson, secondPerson, dmg) {
