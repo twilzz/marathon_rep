@@ -1,22 +1,6 @@
 import { Pokemon } from './pokemon.js';
 import { randomizeDmg } from './randomize.js';
-
-const player1 = new Pokemon ({
-    name: "Pikachu",
-    hp: 100,
-    type: 'electric',
-    selector: `character`
-});
-
-const player2 = new Pokemon ({
-    name: "Charmander",
-    hp: 100,
-    type: 'fire',
-    selector: `enemy`
-});
-
-
-
+import { pokemons } from './pokemons.js';
 
 const btnFight= document.querySelector('#btn-kick'), 
       btnParent = document.querySelector('.control'),
@@ -25,41 +9,54 @@ const btnFight= document.querySelector('#btn-kick'),
       spellChar = document.querySelector('.spell_char'),
       spellEnemy = document.querySelector('.spell_enemy');
 
+
+const player1 = new Pokemon ({
+    ...pokemons[randomizeDmg(pokemons.length)],
+    selector: `player1`
+});
+
+const player2 = new Pokemon ({
+    ...pokemons[randomizeDmg(pokemons.length)],
+    selector: `player2`
+});
+
+console.log(player1.name);
+console.log(player2.name);
+
+player1.attacks.forEach(item => {
+    let dmgButton = document.createElement('button');
+    dmgButton.classList.add('button');
+    dmgButton.innerText = item.name;
+    dmgButton.addEventListener('click', ()=> {
+        console.log(item.name);
+    });
+    btnParent.appendChild(dmgButton);
+
+});
+
+player2.attacks.forEach(item => {
+    let dmgButton = document.createElement('button');
+    dmgButton.classList.add('button');
+    dmgButton.innerText = item.name;
+    dmgButton.addEventListener('click', ()=> {
+        console.log(item.name);
+    });
+    btnParent.appendChild(dmgButton);
+
+});
+
+
+
+
+
+
+
+
 let countChar = clickCounter(6);
 let countEnem = clickCounter(6);
 
 
-spellChar.addEventListener('click', () => {
-    let a = countChar();
-    if (a === 0) {
-        spellChar.innerText = 0;
-        spellChar.disabled = true;
-        paragrathLog.innerText = `${player1.name} исчерпал свои удары`;
-        fightLog.append(paragrathLog);
-        } else {
-        player2.kickAss(randomizeDmg(20), (dmg) =>{
-            paragrathLog.innerText = generateLog(player1,player2,dmg);
-            fightLog.append(paragrathLog);
-        });
-        spellChar.innerText = a;
-           }
-});
 
-spellEnemy.addEventListener('click', () => {
-    let b = countEnem();
-    if (b === 0) {
-        spellEnemy.innerText = 0;
-        spellEnemy.disabled = true;
-        paragrathLog.innerText = `${player2.name} исчерпал свои удары`;
-        fightLog.append(paragrathLog);
-        } else {
-        player1.kickAss(randomizeDmg(20), (dmg) =>{
-            paragrathLog.innerText = generateLog(player2,player1,dmg);
-            fightLog.append(paragrathLog);
-        });
-        spellEnemy.innerText = b;
-           }
-});
 function clickCounter (b) {
     let local = b;
     return ()=>  {
@@ -85,11 +82,46 @@ function generateLog(firstPerson, secondPerson, dmg) {
     ];
     return logs[randomizeDmg(logs.length)-1];
 }
-btnFight.addEventListener('click', ()=>{
-    btnFight.innerText = result();
-    character.kickAss(randomizeDmg(20));
-    enemy.kickAss(randomizeDmg(20));
-});
 
 
 
+
+
+
+
+
+
+
+
+
+// spellChar.addEventListener('click', () => {
+//     let a = countChar();
+//     if (a === 0) {
+//         spellChar.innerText = 0;
+//         spellChar.disabled = true;
+//         paragrathLog.innerText = `${player1.name} исчерпал свои удары`;
+//         fightLog.append(paragrathLog);
+//         } else {
+//         player2.kickAss(randomizeDmg(20), (dmg) =>{
+//             paragrathLog.innerText = generateLog(player1,player2,dmg);
+//             fightLog.append(paragrathLog);
+//         });
+//         spellChar.innerText = a;
+//            }
+// });
+
+// spellEnemy.addEventListener('click', () => {
+//     let b = countEnem();
+//     if (b === 0) {
+//         spellEnemy.innerText = 0;
+//         spellEnemy.disabled = true;
+//         paragrathLog.innerText = `${player2.name} исчерпал свои удары`;
+//         fightLog.append(paragrathLog);
+//         } else {
+//         player1.kickAss(randomizeDmg(20), (dmg) =>{
+//             paragrathLog.innerText = generateLog(player2,player1,dmg);
+//             fightLog.append(paragrathLog);
+//         });
+//         spellEnemy.innerText = b;
+//            }
+// });

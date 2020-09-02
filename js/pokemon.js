@@ -1,19 +1,25 @@
 class Selectors {
     constructor(name){
+        this.pokeName = document.querySelector(`#name-${name}`);
         this.elementHP = document.querySelector(`#health-${name}`);
         this.healthBlock = document.querySelector(`#progressbar-${name}`);
+        this.pokeImg = document.querySelector(`#img-${name}`);
     }
 }
 
 export class Pokemon extends Selectors {
-    constructor({name, hp, type, selector}) {
+    constructor({img, name, hp, type, selector, attacks}) {
         super(selector);
+        this.img = img;
         this.name = name;
         this.hp = {
             current: hp,
             total: hp
         };
         this.type = type;
+        this.attacks = attacks;
+        this.changeName();
+        this.changeImg();
         this.renderHP();
         this.showHP();
     }
@@ -38,6 +44,14 @@ export class Pokemon extends Selectors {
         this.renderHP();
         playerLog(dmg);
 
+    }
+
+    changeName = () => {
+        this.pokeName.innerText = this.name;
+    }
+
+    changeImg = () => {
+        this.pokeImg.src = this.img;
     }
 
 }
