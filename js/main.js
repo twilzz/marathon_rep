@@ -6,16 +6,16 @@ const btnFight= document.querySelector('#btn-kick'),
       btnParent = document.querySelector('.control'),
       fightLog = document.querySelector('#logs'),
       paragrathLog = document.createElement('p'),
-      spellChar = document.querySelector('.spell_char'),
-      spellEnemy = document.querySelector('.spell_enemy');
+      spellChar = document.querySelector('.spell_player1'),
+      spellEnemy = document.querySelector('.spell_player2');
 
 
-const player1 = new Pokemon ({
+let player1 = new Pokemon ({
     ...pokemons[randomizeDmg(pokemons.length)],
     selector: `player1`
 });
 
-const player2 = new Pokemon ({
+let player2 = new Pokemon ({
     ...pokemons[randomizeDmg(pokemons.length)],
     selector: `player2`
 });
@@ -26,22 +26,22 @@ console.log(player2.name);
 player1.attacks.forEach(item => {
     let dmgButton = document.createElement('button');
     dmgButton.classList.add('button');
-    dmgButton.innerText = item.name;
+    dmgButton.innerText = `${item.name} (${item.minDamage}-${item.maxDamage})`;
     dmgButton.addEventListener('click', ()=> {
         console.log(item.name);
     });
-    btnParent.appendChild(dmgButton);
+    spellChar.appendChild(dmgButton);
 
 });
 
 player2.attacks.forEach(item => {
     let dmgButton = document.createElement('button');
     dmgButton.classList.add('button');
-    dmgButton.innerText = item.name;
+    dmgButton.innerText = `${item.name} (${item.minDamage}-${item.maxDamage})`;
     dmgButton.addEventListener('click', ()=> {
         console.log(item.name);
     });
-    btnParent.appendChild(dmgButton);
+    spellEnemy.appendChild(dmgButton);
 
 });
 
