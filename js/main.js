@@ -50,6 +50,7 @@ player2.attacks.forEach((item,index) => {
     dmgButton.classList.add('button');
     dmgButton.innerText = `${item.name} (${item.minDamage}-${item.maxDamage}) - ${item.maxCount}`;
     dmgButton.addEventListener('click', ()=> {
+        let dmg = randomizeDmg(item.minDamage, item.maxDamage);
         let a = count();
         if (a === 'STOP') {
             dmgButton.disabled = true;
@@ -57,7 +58,8 @@ player2.attacks.forEach((item,index) => {
             fightLog.append(paragrathLog);
             } else {
                 dmgButton.innerText = a;
-                player1.kickAss(randomizeDmg(item.minDamage, item.maxDamage), (dmg) =>{
+
+                player1.kickAss(dmg, (dmg) =>{
                 paragrathLog.innerText = generateLog(item.name,player2,player1,dmg);
                 fightLog.append(paragrathLog);
             });
@@ -92,5 +94,5 @@ function generateLog(spell, firstPerson, secondPerson, dmg) {
         `Удар *${spell}* ${firstPerson.name}-а бьёт в живот соперника на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`,
         `Атака *${spell}* ${firstPerson.name}-а разбивает бровь сопернику на ${dmg} урона, оставив [${secondPerson.hp.current}|${secondPerson.hp.total}]`
     ];
-    return logs[randomizeDmg(logs.length)-1];
+    return logs[randomizeNum(logs.length)-1];
 }

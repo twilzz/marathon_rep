@@ -30,11 +30,19 @@ export class Pokemon extends Selectors {
     }
 
      showHP = () => {
+        let classAdd = ((this.hp.current/this.hp.total)*100);
+        if (classAdd < 60 && classAdd > 20) {
+            this.healthBlock.classList.add('low');
+        } else if (classAdd < 20){
+            this.healthBlock.classList.add('critical');
+        }
         this.elementHP.innerText = `${this.hp.current} / ${this.hp.total}`;
-        this.healthBlock.style.width = this.hp.current+'%';
+        this.healthBlock.style.width = classAdd +'%';
+        
     }
 
     kickAss = (dmg, playerLog) => {
+        console.log(dmg);
         this.hp.current -= dmg;
         if (this.hp.current <=0) {
             this.hp.current = 0;
@@ -42,7 +50,7 @@ export class Pokemon extends Selectors {
             const btns = document.querySelectorAll('.button');
             btns.forEach(item => {
                 item.disabled = true;
-            })
+            });
         }
         this.renderHP();
         playerLog(dmg);
