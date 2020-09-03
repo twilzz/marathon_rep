@@ -4,6 +4,7 @@ class Selectors {
         this.elementHP = document.querySelector(`#health-${name}`);
         this.healthBlock = document.querySelector(`#progressbar-${name}`);
         this.pokeImg = document.querySelector(`#img-${name}`);
+        this.btns = document.querySelectorAll(`.spell_${name} button`);
     }
 }
 
@@ -35,11 +36,13 @@ export class Pokemon extends Selectors {
 
     kickAss = (dmg, playerLog) => {
         this.hp.current -= dmg;
-        // let log = this === character ? generateLog(enemy, this, dmg) : generateLog(character, this, dmg);
         if (this.hp.current <=0) {
             this.hp.current = 0;
-            alert(`${name} Проиграл`);
-            btnFight.disabled = true;
+            alert(`${this.name} Проиграл`);
+            const btns = document.querySelectorAll('.button');
+            btns.forEach(item => {
+                item.disabled = true;
+            })
         }
         this.renderHP();
         playerLog(dmg);
