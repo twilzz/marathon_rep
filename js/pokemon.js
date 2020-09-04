@@ -18,6 +18,7 @@ export class Pokemon extends Selectors {
             total: hp
         };
         this.type = type;
+        this.isDead = false;
         this.attacks = attacks;
         this.changeName();
         this.changeImg();
@@ -31,7 +32,9 @@ export class Pokemon extends Selectors {
 
      showHP = () => {
         let classAdd = ((this.hp.current/this.hp.total)*100);
-        if (classAdd < 60 && classAdd > 20) {
+        if (classAdd === 100) {
+            this.healthBlock.classList.remove('critical','low');
+        } else if (classAdd < 60 && classAdd > 20) {
             this.healthBlock.classList.add('low');
         } else if (classAdd < 20){
             this.healthBlock.classList.add('critical');
@@ -41,20 +44,23 @@ export class Pokemon extends Selectors {
         
     }
 
-    kickAss = (dmg, playerLog) => {
-        console.log(dmg);
+    kickAss = (dmg, playerLog, isDead) => {
         this.hp.current -= dmg;
         if (this.hp.current <=0) {
             this.hp.current = 0;
+            this.isDead = true;
             alert(`${this.name} Проиграл`);
             const btns = document.querySelectorAll('.button');
             btns.forEach(item => {
-                item.disabled = true;
+                item.remove();
             });
-        }
+            }
         this.renderHP();
         playerLog(dmg);
-
+        if (this.isDead === true){
+            return this.isDead;
+        }
+        
     }
 
     changeName = () => {
