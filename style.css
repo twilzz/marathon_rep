@@ -495,3 +495,21 @@ h1 {
     background-color: white;
     border: solid 1px black;
 }
+
+.cfighter {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+    }
+
+.cfighter img {
+    width: 100px;
+    height: auto;
+   
+}
+
+#choose-poke {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
