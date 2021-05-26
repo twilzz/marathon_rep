@@ -31,7 +31,7 @@ class Game {
 
     generateButtons =  function () {
         player1.attacks.forEach((item,index) => {
-            const count = clickCounter(item.maxCount, item.name, item.minDamage, item.maxDamage);
+            const count = clickCounter(item.maxCount, item.name);
             let dmgButton = document.createElement('button');
             dmgButton.classList.add('button');
             dmgButton.innerText = `${item.name} - ${item.maxCount}`;
@@ -59,7 +59,7 @@ class Game {
                  }
                 
             });
-            spellChar.appendChild(dmgButton);
+            btnParent.appendChild(dmgButton);
         
         });
         
